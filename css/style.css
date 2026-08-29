@@ -1,0 +1,1294 @@
+/* ═══════════════════════════════════════════════════════════════
+   نظام اختتام الصيف — ملف التنسيقات الرئيسي
+   Summer Closing System — Main Stylesheet
+   اللغات: العربية (RTL) / English (LTR) / Français (LTR)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ───────────────────────────────────────────────
+   1) متغيرات التصميم (Design Tokens)
+   ─────────────────────────────────────────────── */
+:root {
+  /* الألوان الأساسية */
+  --green-950: #06281d;
+  --green-900: #0b3d2e;
+  --green-800: #0e4a37;
+  --green-700: #156545;
+  --green-500: #2b8a6e;
+  --green-300: #7fe3c4;
+
+  --gold-600: #e0a72e;
+  --gold-500: #f6c453;
+  --gold-300: #ffe08a;
+  --cream:    #fff8e1;
+  --white:    #ffffff;
+
+  /* ألوان إضافية للخلفية الملونة */
+  --purple:   #8b5cf6;
+  --pink:     #f472b6;
+  --teal:     #22d3ee;
+
+  /* ألوان الحالة */
+  --danger:      #ff5d73;
+  --danger-dark: #d93349;
+  --success:     #3ddc97;
+  --info:        #6ec3ff;
+  --warning:     #ffb35c;
+
+  /* تدرجات الترتيب (ميداليات) */
+  --rank-gold:   linear-gradient(135deg, #fff3c4, #f6c453 45%, #e0a72e);
+  --rank-silver: linear-gradient(135deg, #ffffff, #c8d3dd 55%, #9fb0bf);
+  --rank-bronze: linear-gradient(135deg, #ffd9ae, #d9985f 55%, #b9713c);
+
+  /* الزجاج (Glassmorphism) */
+  --glass:         rgba(255, 255, 255, 0.08);
+  --glass-strong:  rgba(255, 255, 255, 0.15);
+  --glass-border:  rgba(255, 255, 255, 0.20);
+  --glass-shadow:  0 18px 55px rgba(0, 0, 0, 0.38);
+
+  /* الخطوط المميزة */
+  --font-display: 'Reem Kufi', 'Tajawal', 'Poppins', sans-serif;
+  --font-body:    'Tajawal', 'Poppins', sans-serif;
+  --font-latin:   'Poppins', 'Tajawal', sans-serif;
+
+  /* أحجام خط كبيرة وغير اعتيادية */
+  --fs-xs:  0.82rem;
+  --fs-sm:  0.95rem;
+  --fs-md:  1.14rem;
+  --fs-lg:  1.38rem;
+  --fs-xl:  clamp(1.6rem, 2.6vw, 2.05rem);
+  --fs-2xl: clamp(2rem, 4.2vw, 2.9rem);
+  --fs-3xl: clamp(2.5rem, 5.5vw, 3.8rem);
+
+  /* الحواف والمسافات */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 28px;
+  --r-full: 999px;
+
+  --gap-1: 0.4rem;
+  --gap-2: 0.75rem;
+  --gap-3: 1rem;
+  --gap-4: 1.5rem;
+  --gap-5: 2.25rem;
+
+  --tr: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ───────────────────────────────────────────────
+   2) إعادة الضبط والأساسيات (Reset & Base)
+   ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 17px;                 /* حجم أساس أكبر من المعتاد */
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  line-height: 1.7;
+  color: #eefaf4;
+  background: linear-gradient(160deg, var(--green-950) 0%, var(--green-900) 45%, #0a2f3d 100%);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* عند اللغات اللاتينية نستخدم خط Poppins */
+html[lang="en"] body,
+html[lang="fr"] body { font-family: var(--font-latin); }
+
+html[lang="en"] h1, html[lang="en"] h2, html[lang="en"] h3,
+html[lang="fr"] h1, html[lang="fr"] h2, html[lang="fr"] h3,
+html[lang="en"] .font-display, html[lang="fr"] .font-display {
+  font-family: var(--font-latin);
+  letter-spacing: -0.5px;
+}
+
+img, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; border: none; background: none; }
+a { color: var(--gold-300); text-decoration: none; }
+ul, ol { list-style: none; }
+
+::selection { background: var(--gold-500); color: var(--green-950); }
+
+/* شريط التمرير المخصص */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.25); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--gold-500), var(--gold-600));
+  border-radius: var(--r-full);
+  border: 2px solid rgba(0, 0, 0, 0.25);
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold-300);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.hidden { display: none !important; }
+
+/* ───────────────────────────────────────────────
+   3) الخلفية الملونة المتحركة (Aurora)
+   ─────────────────────────────────────────────── */
+.bg-aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 20% 0%, #10402f 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 100%, #0b3550 0%, transparent 55%),
+              linear-gradient(165deg, #07271c 0%, #0b3d2e 50%, #07202e 100%);
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.b1 {
+  width: 46vmax; height: 46vmax;
+  inset-inline-start: -12vmax; top: -14vmax;
+  background: radial-gradient(circle, var(--green-300) 0%, transparent 70%);
+  animation: drift1 26s ease-in-out infinite alternate;
+}
+.b2 {
+  width: 40vmax; height: 40vmax;
+  inset-inline-end: -10vmax; top: 18%;
+  background: radial-gradient(circle, var(--gold-500) 0%, transparent 70%);
+  opacity: 0.35;
+  animation: drift2 30s ease-in-out infinite alternate;
+}
+.b3 {
+  width: 44vmax; height: 44vmax;
+  inset-inline-start: 12%; bottom: -18vmax;
+  background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+  opacity: 0.32;
+  animation: drift3 34s ease-in-out infinite alternate;
+}
+.b4 {
+  width: 30vmax; height: 30vmax;
+  inset-inline-end: 18%; bottom: 8%;
+  background: radial-gradient(circle, var(--teal) 0%, transparent 70%);
+  opacity: 0.3;
+  animation: drift4 24s ease-in-out infinite alternate;
+}
+
+@keyframes drift1 { to { transform: translate(9vmax, 7vmax) scale(1.18) rotate(20deg); } }
+@keyframes drift2 { to { transform: translate(-8vmax, 10vmax) scale(0.85); } }
+@keyframes drift3 { to { transform: translate(10vmax, -8vmax) scale(1.22); } }
+@keyframes drift4 { to { transform: translate(-7vmax, -6vmax) scale(1.1); } }
+
+/* النجوم المتلألئة */
+.stars { position: absolute; inset: 0; }
+.stars::before,
+.stars::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 12%, #fff8 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 22% 68%, #ffe08a99 50%, transparent 51%),
+    radial-gradient(1.8px 1.8px at 35% 25%, #fff7 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 48% 82%, #7fe3c4aa 50%, transparent 51%),
+    radial-gradient(1.6px 1.6px at 60% 40%, #fff6 50%, transparent 51%),
+    radial-gradient(1.2px 1.2px at 72% 15%, #ffe08a88 50%, transparent 51%),
+    radial-gradient(1.7px 1.7px at 85% 55%, #fff9 50%, transparent 51%),
+    radial-gradient(1.3px 1.3px at 93% 30%, #7fe3c499 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 15% 90%, #fff5 50%, transparent 51%),
+    radial-gradient(1.1px 1.1px at 55% 8%, #ffe08a77 50%, transparent 51%);
+  animation: twinkle 5s ease-in-out infinite alternate;
+}
+.stars::after {
+  transform: translate(40px, 60px) scale(1.4);
+  animation-delay: 2.5s;
+  opacity: 0.6;
+}
+@keyframes twinkle { from { opacity: 0.35; } to { opacity: 1; } }
+
+/* ───────────────────────────────────────────────
+   4) البطاقات الزجاجية العامة (Glass)
+   ─────────────────────────────────────────────── */
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(22px) saturate(1.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4);
+  box-shadow: var(--glass-shadow);
+}
+
+.card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: var(--glass-shadow);
+  padding: var(--gap-4);
+  transition: transform var(--tr), border-color var(--tr);
+}
+.card:hover { border-color: rgba(246, 196, 83, 0.4); }
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--gap-3);
+}
+
+.card-title, .section-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  color: var(--gold-300);
+  position: relative;
+  padding-bottom: 0.35rem;
+}
+.section-title::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 0;
+  width: 55px;
+  height: 4px;
+  border-radius: var(--r-full);
+  background: linear-gradient(90deg, var(--gold-500), transparent);
+}
+[dir="ltr"] .section-title::after {
+  background: linear-gradient(270deg, var(--gold-500), transparent);
+}
+
+/* ───────────────────────────────────────────────
+   5) الأزرار (Buttons)
+   ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.68rem 1.35rem;
+  border-radius: var(--r-full);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+  transition: transform var(--tr), box-shadow var(--tr),
+              background var(--tr), filter var(--tr);
+  user-select: none;
+}
+.btn:active { transform: scale(0.96); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--green-500), var(--green-700));
+  color: var(--cream);
+  box-shadow: 0 8px 24px rgba(21, 101, 69, 0.45);
+}
+.btn-primary:hover { filter: brightness(1.15); transform: translateY(-2px); }
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-300), var(--gold-500) 55%, var(--gold-600));
+  color: var(--green-950);
+  box-shadow: 0 8px 26px rgba(246, 196, 83, 0.38);
+}
+.btn-gold:hover { filter: brightness(1.08); transform: translateY(-2px); }
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(217, 51, 73, 0.4);
+}
+.btn-danger:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+.btn-ghost {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: #eefaf4;
+}
+.btn-ghost:hover { background: var(--glass-strong); }
+
+.btn-sm { padding: 0.4rem 0.9rem; font-size: var(--fs-sm); }
+.btn-lg { padding: 0.9rem 1.9rem; font-size: var(--fs-lg); }
+.btn-block { width: 100%; }
+
+/* زر الأيقونة (عين كلمة المرور / إغلاق) */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: var(--r-full);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  font-size: 1.15rem;
+  transition: background var(--tr), transform var(--tr);
+}
+.icon-btn:hover { background: var(--glass-strong); transform: scale(1.08); }
+
+/* أزرار صغيرة داخل الجداول */
+.mini-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--r-sm);
+  font-size: 1rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  transition: all var(--tr);
+}
+.mini-btn:hover { transform: translateY(-2px) scale(1.06); }
+.mini-btn.edit:hover   { background: rgba(110, 195, 255, 0.25); border-color: var(--info); }
+.mini-btn.delete:hover { background: rgba(255, 93, 115, 0.25); border-color: var(--danger); }
+.mini-btn.view:hover   { background: rgba(246, 196, 83, 0.25); border-color: var(--gold-500); }
+
+/* ───────────────────────────────────────────────
+   6) النماذج والحقول (Forms)
+   ─────────────────────────────────────────────── */
+.field-label {
+  display: block;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--gold-300);
+  margin-bottom: 0.4rem;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+select, textarea {
+  width: 100%;
+  padding: 0.72rem 1rem;
+  border-radius: var(--r-md);
+  border: 2px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.28);
+  color: var(--cream);
+  font-size: var(--fs-md);
+  transition: border-color var(--tr), box-shadow var(--tr), background var(--tr);
+}
+
+input::placeholder, textarea::placeholder { color: rgba(238, 250, 244, 0.45); }
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 4px rgba(246, 196, 83, 0.18);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+select option { background: var(--green-900); color: var(--cream); }
+
+/* غلاف الإدخال مع زر العين */
+.input-wrap { position: relative; display: flex; align-items: center; }
+.input-wrap input { padding-inline-end: 3.6rem; }
+.input-wrap .icon-btn {
+  position: absolute;
+  inset-inline-end: 0.4rem;
+  width: 2.4rem; height: 2.4rem;
+  font-size: 1rem;
+}
+
+.form-hint {
+  font-size: var(--fs-xs);
+  color: rgba(238, 250, 244, 0.6);
+  margin-top: 0.3rem;
+}
+
+/* مجموعة أزرار الاختيار (الدرجة العظمى) */
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+.radio-chip {
+  padding: 0.5rem 1.15rem;
+  border-radius: var(--r-full);
+  border: 2px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.25);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: all var(--tr);
+  user-select: none;
+}
+.radio-chip:hover { border-color: var(--gold-300); }
+.radio-chip.checked, .radio-chip.active {
+  background: linear-gradient(135deg, var(--gold-300), var(--gold-500));
+  color: var(--green-950);
+  border-color: transparent;
+  box-shadow: 0 6px 18px rgba(246, 196, 83, 0.35);
+}
+
+/* شبكة النموذج داخل النوافذ */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-3) var(--gap-4);
+}
+.form-field.full { grid-column: 1 / -1; }
+
+/* ───────────────────────────────────────────────
+   7) شاشة الدخول (Login)
+   ─────────────────────────────────────────────── */
+.screen {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-wrap {
+  align-items: center;
+  justify-content: center;
+  padding: var(--gap-4) var(--gap-3);
+}
+
+.login-card {
+  width: min(430px, 100%);
+  padding: var(--gap-5) var(--gap-4) var(--gap-4);
+  text-align: center;
+  animation: riseIn 0.65s cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+
+.logo-mark {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto var(--gap-3);
+  filter: drop-shadow(0 0 22px rgba(246, 196, 83, 0.5));
+  animation: floatLogo 4.5s ease-in-out infinite;
+}
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+
+.app-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--gold-300), var(--gold-500), var(--green-300), var(--gold-300));
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+@keyframes shimmer { to { background-position: 250% center; } }
+
+.app-sub {
+  color: rgba(238, 250, 244, 0.75);
+  font-size: var(--fs-sm);
+  margin: 0.35rem 0 var(--gap-4);
+}
+
+.login-card form { text-align: start; }
+
+.error-msg {
+  color: var(--danger);
+  background: rgba(255, 93, 115, 0.12);
+  border: 1px solid rgba(255, 93, 115, 0.4);
+  border-radius: var(--r-sm);
+  padding: 0.55rem 0.9rem;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  margin: 0.7rem 0;
+  animation: shake 0.4s;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-7px); }
+  50% { transform: translateX(7px); }
+  75% { transform: translateX(-4px); }
+}
+
+.login-card .btn-lg { margin-top: var(--gap-2); }
+
+.login-foot { margin-top: var(--gap-3); }
+
+/* ───────────────────────────────────────────────
+   8) مبدّل اللغات (Language Switch)
+   ─────────────────────────────────────────────── */
+.lang-switch {
+  display: inline-flex;
+  gap: 0.35rem;
+  padding: 0.3rem;
+  border-radius: var(--r-full);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--glass-border);
+}
+.lang-btn {
+  padding: 0.38rem 0.95rem;
+  border-radius: var(--r-full);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: rgba(238, 250, 244, 0.75);
+  transition: all var(--tr);
+}
+.lang-btn:hover { color: var(--cream); }
+.lang-btn.active {
+  background: linear-gradient(135deg, var(--gold-300), var(--gold-500));
+  color: var(--green-950);
+  box-shadow: 0 4px 14px rgba(246, 196, 83, 0.35);
+}
+
+/* ───────────────────────────────────────────────
+   9) رأس التطبيق (Header)
+   ─────────────────────────────────────────────── */
+#main-screen {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  animation: riseIn 0.5s ease both;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(6, 40, 29, 0.72);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0.6rem var(--gap-3);
+}
+
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-2);
+  flex-wrap: wrap;
+}
+
+.brand { display: flex; align-items: center; gap: 0.7rem; min-width: 0; }
+.brand-logo {
+  width: 46px; height: 46px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(246, 196, 83, 0.45));
+}
+.brand-text { min-width: 0; }
+.brand-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  color: var(--gold-300);
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.brand-sub {
+  font-size: var(--fs-xs);
+  color: rgba(238, 250, 244, 0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+/* زر التثبيت (PWA) — ينبض لجذب الانتباه */
+.btn-install {
+  background: linear-gradient(135deg, var(--green-300), var(--green-500));
+  color: var(--green-950);
+  font-weight: 800;
+  box-shadow: 0 6px 20px rgba(47, 226, 173, 0.35);
+  animation: pulseInstall 2.6s ease-in-out infinite;
+}
+@keyframes pulseInstall {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(47, 226, 173, 0.55); }
+  50%      { box-shadow: 0 0 0 12px rgba(47, 226, 173, 0); }
+}
+
+/* شريط المستخدم أسفل الرأس */
+.user-bar {
+  max-width: 1280px;
+  margin: 0.55rem auto 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 1rem 0.35rem 0.6rem;
+  border-radius: var(--r-full);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+[dir="ltr"] .user-chip { padding: 0.35rem 0.6rem 0.35rem 1rem; }
+
+.avatar {
+  width: 2.1rem; height: 2.1rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--green-950);
+  background: linear-gradient(135deg, var(--gold-300), var(--gold-600));
+  flex-shrink: 0;
+}
+
+.role-chip {
+  padding: 0.28rem 0.9rem;
+  border-radius: var(--r-full);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: 0.4px;
+}
+.role-chip.admin { background: linear-gradient(135deg, var(--gold-300), var(--gold-600)); color: var(--green-950); }
+.role-chip.teacher { background: rgba(127, 227, 196, 0.2); color: var(--green-300); border: 1px solid rgba(127, 227, 196, 0.45); }
+
+/* ───────────────────────────────────────────────
+   10) شريط التبويبات الثلاثة (Tabs + سحب بالإصبع)
+   ─────────────────────────────────────────────── */
+.tabs-bar {
+  position: sticky;
+  top: var(--header-h, 64px);
+  z-index: 50;
+  max-width: 1280px;
+  width: calc(100% - var(--gap-3) * 2);
+  margin: var(--gap-3) auto 0;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4rem;
+  border-radius: var(--r-full);
+  background: rgba(6, 40, 29, 0.66);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs-bar::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  flex: 1;
+  min-width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: var(--r-full);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: rgba(238, 250, 244, 0.72);
+  transition: all var(--tr);
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--cream); background: var(--glass); }
+.tab-btn.active {
+  background: linear-gradient(135deg, var(--gold-300), var(--gold-500) 60%, var(--gold-600));
+  color: var(--green-950);
+  box-shadow: 0 8px 24px rgba(246, 196, 83, 0.4);
+  transform: translateY(-1px);
+}
+.tab-ico { font-size: 1.25em; }
+
+/* تلميح السحب على الجوال */
+.swipe-hint {
+  display: none;
+  text-align: center;
+  font-size: var(--fs-xs);
+  color: rgba(238, 250, 244, 0.55);
+  margin-top: 0.45rem;
+}
+.swipe-hint .hand {
+  display: inline-block;
+  animation: swipeAnim 2.2s ease-in-out infinite;
+}
+@keyframes swipeAnim {
+  0%, 100% { transform: translateX(0); opacity: 0.6; }
+  50%      { transform: translateX(-26px); opacity: 1; }
+}
+[dir="ltr"] .swipe-hint .hand { animation-name: swipeAnimLtr; }
+@keyframes swipeAnimLtr { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(26px); } }
+
+@media (hover: none) and (pointer: coarse) { .swipe-hint { display: block; } }
+
+/* ───────────────────────────────────────────────
+   11) حاوية العرض (View) وشريط الأدوات
+   ─────────────────────────────────────────────── */
+.view-container {
+  flex: 1;
+  width: min(1280px, 100% - var(--gap-3) * 2);
+  margin: var(--gap-3) auto var(--gap-4);
+  animation: fadeUp 0.45s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(28px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.view-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--gap-3);
+}
+.toolbar-actions { display: flex; gap: 0.55rem; flex-wrap: wrap; }
+
+/* البحث */
+.search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+  max-width: 380px;
+}
+.search-wrap .search-ico {
+  position: absolute;
+  inset-inline-start: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.05rem;
+  opacity: 0.65;
+  pointer-events: none;
+}
+.search-wrap input { padding-inline-start: 2.7rem; }
+
+/* ───────────────────────────────────────────────
+   12) بطاقات الإحصائيات (Stats)
+   ─────────────────────────────────────────────── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--gap-3);
+  margin-bottom: var(--gap-4);
+}
+
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  padding: var(--gap-3) var(--gap-4);
+  text-align: center;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0; top: 0;
+  width: 6px; height: 100%;
+  background: var(--accent, var(--gold-500));
+}
+.stat-card.accent-gold   { --accent: linear-gradient(var(--gold-300), var(--gold-600)); }
+.stat-card.accent-green  { --accent: linear-gradient(var(--green-300), var(--green-500)); }
+.stat-card.accent-blue   { --accent: linear-gradient(var(--info), #3b82f6); }
+.stat-card.accent-purple { --accent: linear-gradient(#c084fc, var(--purple)); }
+.stat-card.accent-red    { --accent: linear-gradient(#ff8fa3, var(--danger-dark)); }
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--cream);
+}
+.stat-label {
+  font-size: var(--fs-sm);
+  color: rgba(238, 250, 244, 0.72);
+  margin-top: 0.15rem;
+}
+
+/* ───────────────────────────────────────────────
+   13) الجداول والترتيب بالميداليات (Tables & Ranking)
+   ─────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  border-radius: var(--r-md);
+  border: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.22);
+  -webkit-overflow-scrolling: touch;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+
+.data-table thead th {
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, rgba(21, 101, 69, 0.95), rgba(11, 61, 46, 0.95));
+  color: var(--gold-300);
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  text-align: start;
+  padding: 0.85rem 1rem;
+  white-space: nowrap;
+  border-bottom: 2px solid rgba(246, 196, 83, 0.35);
+  z-index: 2;
+}
+
+.data-table tbody td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  vertical-align: middle;
+}
+.data-table tbody tr { transition: background var(--tr); }
+.data-table tbody tr:nth-child(even) { background: rgba(255, 255, 255, 0.035); }
+.data-table tbody tr:hover { background: rgba(246, 196, 83, 0.09); }
+.data-table tbody tr:last-child td { border-bottom: none; }
+
+/* خلية الترتيب والميداليات */
+.rank-cell { text-align: center; width: 74px; }
+.medal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem; height: 2.4rem;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #5c4014;
+  box-shadow: inset 0 -3px 6px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.35);
+}
+.medal-1 { background: var(--rank-gold); }
+.medal-2 { background: var(--rank-silver); color: #3c4a56; }
+.medal-3 { background: var(--rank-bronze); color: #5a3416; }
+.medal-1::before { content: '🥇'; background: none; box-shadow: none; }
+.medal-2::before { content: '🥈'; }
+.medal-3::before { content: '🥉'; }
+.medal-1, .medal-2, .medal-3 { font-size: 0; }
+.rank-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem; height: 2rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid var(--glass-border);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+
+.name-cell { font-weight: 700; font-size: var(--fs-md); }
+.name-cell .sub-name {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: rgba(238, 250, 244, 0.55);
+  margin-top: 0.1rem;
+}
+
+/* شريط الدرجة المئوية */
+.pct-wrap { min-width: 150px; }
+.pct {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-md);
+}
+.pbar {
+  height: 9px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  margin-top: 0.35rem;
+}
+.pbar-fill {
+  height: 100%;
+  border-radius: var(--r-full);
+  width: 0;
+  transition: width 0.9s cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+.pbar-fill.ok  { background: linear-gradient(90deg, var(--green-300), var(--success)); }
+.pbar-fill.mid { background: linear-gradient(90deg, var(--gold-300), var(--gold-600)); }
+.pbar-fill.low { background: linear-gradient(90deg, #ff8fa3, var(--danger-dark)); }
+
+.table-actions { white-space: nowrap; display: flex; gap: 0.4rem; }
+
+/* إدخال الدرجات داخل الجدول */
+.grade-input { width: 90px; text-align: center; font-weight: 700; }
+.grade-input.maxed { border-color: var(--gold-500); color: var(--gold-300); }
+
+/* ───────────────────────────────────────────────
+   14) الشارات (Chips / Badges)
+   ─────────────────────────────────────────────── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.85rem;
+  border-radius: var(--r-full);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  white-space: nowrap;
+}
+.chip-gold   { background: rgba(246, 196, 83, 0.18); color: var(--gold-300); border: 1px solid rgba(246, 196, 83, 0.45); }
+.chip-green  { background: rgba(61, 220, 151, 0.15); color: var(--success); border: 1px solid rgba(61, 220, 151, 0.4); }
+.chip-blue   { background: rgba(110, 195, 255, 0.15); color: var(--info); border: 1px solid rgba(110, 195, 255, 0.4); }
+.chip-red    { background: rgba(255, 93, 115, 0.15); color: var(--danger); border: 1px solid rgba(255, 93, 115, 0.4); }
+.chip-purple { background: rgba(139, 92, 246, 0.18); color: #c4b5fd; border: 1px solid rgba(139, 92, 246, 0.45); }
+.chip-muted  { background: rgba(255, 255, 255, 0.08); color: rgba(238, 250, 244, 0.7); border: 1px solid var(--glass-border); }
+
+/* ───────────────────────────────────────────────
+   15) النافذة المنبثقة (Modal)
+   ─────────────────────────────────────────────── */
+.modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gap-3);
+}
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 18, 13, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fadeIn 0.25s ease both;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  position: relative;
+  width: min(640px, 100%);
+  max-height: 88vh;
+  max-height: 88dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalIn 0.35s cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(42px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-2);
+  padding: var(--gap-3) var(--gap-4);
+  border-bottom: 1px solid var(--glass-border);
+  background: linear-gradient(180deg, rgba(246, 196, 83, 0.12), transparent);
+}
+.modal-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  color: var(--gold-300);
+}
+
+.modal-body {
+  padding: var(--gap-4);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: var(--gap-3) var(--gap-4);
+  border-top: 1px solid var(--glass-border);
+  flex-wrap: wrap;
+}
+
+/* ───────────────────────────────────────────────
+   16) الإشعارات (Toasts)
+   ─────────────────────────────────────────────── */
+.toast-root {
+  position: fixed;
+  bottom: calc(var(--gap-3) + env(safe-area-inset-bottom, 0px));
+  inset-inline: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  pointer-events: none;
+  padding: 0 var(--gap-3);
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: min(400px, 90vw);
+  max-width: 92vw;
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--r-md);
+  background: rgba(6, 40, 29, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-inline-start: 5px solid var(--info);
+  box-shadow: var(--glass-shadow);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  animation: toastIn 0.35s cubic-bezier(0.2, 0.8, 0.25, 1) both;
+}
+.toast.success { border-inline-start-color: var(--success); }
+.toast.error   { border-inline-start-color: var(--danger); }
+.toast.info    { border-inline-start-color: var(--info); }
+.toast.hide    { animation: toastOut 0.3s ease both; }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes toastOut {
+  from { opacity: 1; }
+  to   { opacity: 0; transform: translateY(14px) scale(0.96); }
+}
+.toast-ico { font-size: 1.3rem; }
+
+/* ───────────────────────────────────────────────
+   17) يوم الاختتام الصيفي — المهرجانية (Ceremony)
+   ─────────────────────────────────────────────── */
+.cer-hero {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: var(--gap-5) var(--gap-3);
+  margin-bottom: var(--gap-4);
+  border-radius: var(--r-xl);
+  background: linear-gradient(140deg,
+    rgba(246, 196, 83, 0.18) 0%,
+    rgba(127, 227, 196, 0.12) 45%,
+    rgba(139, 92, 246, 0.14) 100%),
+    var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--glass-shadow);
+}
+.cer-hero::before, .cer-hero::after {
+  content: '✦';
+  position: absolute;
+  font-size: 1.6rem;
+  color: var(--gold-300);
+  opacity: 0.5;
+  animation: twinkle 3s ease-in-out infinite alternate;
+}
+.cer-hero::before { inset-inline-start: 8%; top: 14%; }
+.cer-hero::after  { inset-inline-end: 9%; bottom: 16%; animation-delay: 1.4s; }
+
+.cer-hero-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  background: linear-gradient(90deg, var(--gold-300), var(--cream), var(--green-300), var(--gold-300));
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 7s linear infinite;
+}
+.cer-hero-sub {
+  color: rgba(238, 250, 244, 0.8);
+  font-size: var(--fs-md);
+  margin-top: 0.5rem;
+}
+
+.cer-section { margin-bottom: var(--gap-4); }
+
+.cer-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--gap-3);
+}
+
+.cer-badge {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  padding: 0.35rem 1.4rem;
+  border-radius: var(--r-full);
+  font-weight: 700;
+}
+.cer-badge.seniors {
+  background: linear-gradient(135deg, var(--gold-300), var(--gold-600));
+  color: var(--green-950);
+  box-shadow: 0 6px 20px rgba(246, 196, 83, 0.35);
+}
+.cer-badge.juniors {
+  background: linear-gradient(135deg, var(--green-300), var(--green-500));
+  color: var(--green-950);
+  box-shadow: 0 6px 20px rgba(127, 227, 196, 0.3);
+}
+
+/* أعمدة أنشطة المهرجانية */
+.cer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--gap-3);
+}
+.cer-act {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: var(--gap-3);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-md);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: transform var(--tr), border-color var(--tr);
+}
+.cer-act:hover { transform: translateY(-4px); border-color: rgba(246, 196, 83, 0.45); }
+
+.cer-act-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.cer-act-name {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--gold-300);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* رقائق الطلاب المشاركين */
+.cer-students { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.student-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.32rem 0.85rem;
+  border-radius: var(--r-full);
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--glass-border);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  transition: all var(--tr);
+}
+.student-chip:hover { border-color: var(--green-300); }
+.student-chip .rm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem; height: 1.35rem;
+  border-radius: 50%;
+  background: rgba(255, 93, 115, 0.25);
+  color: var(--danger);
+  font-size: 0.85rem;
+  line-height: 1;
+}
+.student-chip .rm:hover { background: var(--danger); color: #fff; }
+
+.cer-add-row { display: flex; gap: 0.55rem; flex-wrap: wrap; }
+
+/* ───────────────────────────────────────────────
+   18) الحالة الفارغة (Empty State)
+   ─────────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: var(--gap-5) var(--gap-3);
+  color: rgba(238, 250, 244, 0.65);
+}
+.empty-ico { font-size: 3.4rem; margin-bottom: 0.6rem; animation: floatLogo 4s ease-in-out infinite; }
+.empty-text { font-size: var(--fs-md); margin-bottom: var(--gap-3); }
+
+/* ───────────────────────────────────────────────
+   19) التذييل (Footer)
+   ─────────────────────────────────────────────── */
+.app-footer {
+  text-align: center;
+  padding: var(--gap-3);
+  font-size: var(--fs-xs);
+  color: rgba(238, 250, 244, 0.5);
+  border-top: 1px solid var(--glass-border);
+  margin-top: auto;
+}
+
+/* ───────────────────────────────────────────────
+   20) الاستجابة للشاشات (Responsive)
+   ─────────────────────────────────────────────── */
+@media (max-width: 780px) {
+  html { font-size: 16px; }
+
+  .header-inner { justify-content: center; }
+  .brand-sub { display: none; }
+
+  /* الأزرار تصبح أيقونات فقط على الجوال */
+  .btn .btn-text { display: none; }
+  .header-actions .btn { padding: 0.55rem 0.85rem; }
+
+  .form-grid { grid-template-columns: 1fr; }
+
+  .view-container { width: calc(100% - var(--gap-2) * 2); }
+
+  .data-table { min-width: 540px; }
+  .modal { width: 100%; }
+  .cer-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 420px) {
+  .brand-title { font-size: var(--fs-md); }
+  .stat-num { font-size: var(--fs-xl); }
+  .toast { min-width: 88vw; }
+}
+
+/* ───────────────────────────────────────────────
+   21) تقليل الحركة لمن يفضّل ذلك
+   ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ───────────────────────────────────────────────
+   22) طباعة برنامج المهرجانية (Print)
+   ─────────────────────────────────────────────── */
+@media print {
+  .bg-aurora, .app-header, .tabs-bar, .app-footer,
+  .view-toolbar, .table-actions, .mini-btn, .cer-add-row,
+  .btn, .swipe-hint, .toast-root { display: none !important; }
+
+  body, .card, .cer-act {
+    background: #fff !important;
+    color: #111 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+  .cer-hero-title, .section-title, .cer-act-name, .name-cell { color: #0b3d2e !important; -webkit-text-fill-color: #0b3d2e; }
+}
